@@ -1,63 +1,61 @@
 <%@ Page Language="C#" %>
+
 <!DOCTYPE html>
+
 <html>
 <head>
-    <title>Hello.net</title>
+    <title><%= System.Environment.GetEnvironmentVariable("title") %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
     <style>
-        body {
-            background-color: cyan;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
+        * {
+            box-sizing: border-box;
+            font-family: verdana;
         }
-        .container {
+
+        label {
+            padding: 1px 1px 1px 0;
+            display: inline-block;
+        }
+
+        .column {
+            float: left;
+            width: 25%;
+            padding: 10px;
+        }
+
+        .column-mid-white {
             background-color: blue;
-            width: 800px;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-        .time-bar {
-            background-color: white;
-            width: 800px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 5px;
-            font-family: Arial, sans-serif;
-            font-size: 24px;
-        }
-        .label {
-            color: black;
-            font-family: Arial, sans-serif;
-            font-size: 24px;
-            margin-right: 10px;
-            text-align: center;
-        }
-        .welcome-heading {
-            color: black;
-            font-family: Arial, sans-serif;
-            font-size: 50px;
-            text-align: center;
-            margin-bottom: 24px;
-            position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1;
-        }
-        .Nano-box {
             color: white;
-            font-family: Arial, sans-serif;
-            font-size: 18px;
-            margin-right: 10px;
-            text-align: center;
+            float: left;
+            width: 25%;
+            padding: 10px;
         }
+
+        .column-50 {
+            background-color: #f1f1f1;
+            float: left;
+            width: 50%;
+            padding: 10px;
+        }
+
+        .text-bk {
+            background-color: #3377ff;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .responsive {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+        }
+
     </style>
     <script>
         function updateTime() {
@@ -70,16 +68,47 @@
     </script>
 </head>
 <body>
-    <div class="welcome-heading">Welcome to appz clock</div>
-
-    <div class="container">
-        <img src="https://avatars.githubusercontent.com/u/52163541?s=200&v=4" alt="Appz Emblem">
-        <h1 class="heading" style="color: white;">Appz Live Clock</h1>
-        <h2 class="Nano-box" style="color: red;" > <p>Message: <%= System.Environment.GetEnvironmentVariable("NANO") %></p> </h2>
-        <div class="time-bar">
-            <span class="label">Current Time:</span>
-            <span id="time"><%= DateTime.Now.ToString("HH:mm:ss") %></span>
+    <form id="form1" runat="server">
+        <div class="row">
+            <div>
+                <h1 style="color: #DAA520;"><center>AppZ Demo</center></h1>
+                <h2><center>Fully Automated Multi-Cloud Management Platform</center></h2>
+            </div>
         </div>
-    </div>
+
+        <div class="row">
+            <div class="column">
+            </div>
+            <div class="column-50" style="text-align: center;">
+                <span class="label" style="text-align: center; color: black; font-weight: bold; ">Current Time:</span>
+                <span id="time" style="font-weight: bold;"><%= DateTime.Now.ToString("HH:mm:ss") %></span>
+                <h3><center>Application Server</center></h3>
+                <h2 style="color: #3377ff;">Application Server: <%= Server.MachineName %><br/> IP Address: <%@ Import Namespace="System.Net" %>
+                    <% 
+                        string ipValue = "error";
+                        try {
+                            string hostName = Dns.GetHostName();
+                            IPAddress[] addresses = Dns.GetHostAddresses(hostName);
+                            foreach (IPAddress address in addresses) {
+                                if (address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork) {
+                                    ipValue = address.ToString();
+                                    break;
+                                }
+                            }
+                        } catch (System.Net.Sockets.SocketException) {
+                            // Handle exception
+                        }
+                        %><%= ipValue %><br/>nano: <%= System.Environment.GetEnvironmentVariable("nano") %></h2>
+            </div>
+            <div class="column">
+            </div>
+        </div>
+
+        <div class="row">
+            <div>
+                <center><img src="https://raw.githubusercontent.com/rejith/tomcat-loadgen/master/WebContent/images/logo_v1.png" alt="CLOUDBOURNE" class="responsive" width="90px" style="margin:10px"></center>
+            </div>
+        </div>
+    </form>
 </body>
 </html>
