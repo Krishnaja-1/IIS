@@ -1,17 +1,17 @@
 app:
     name: iis
     code: iis
-    notify: ssankar@ecloudcontrol.com
+    notify: kunnikrishnan@ecloudcontrol.com
 
 build:
-    version: 2.9.31
-    env: DEV
+    version: 2.9.39
+    env: POC
     build_file: none
     output_files: output/*.zip
     image_template: ansible-2.9
 
 deploy:
-    context: alpha/DEV
+    context: macom/POC
     replicas: 1
 
   
@@ -21,8 +21,8 @@ properties:
     IIS_HOSTNAME: 'localhost'
     IIS_ZIP_FILE_NAME: 'IIS_Website'
     IIS_REVISION: '1'
-    WINDOWSERVERIP: 'ec2-54-70-175-52.us-west-2.compute.amazonaws.com'
-    WINDOWUSER: 'Administrator'
+    WINDOWSERVERIP: '10.192.5.27'
+    WINDOWUSER: 'MACTECH\krishnaja'
     PASSWORD: 
       - vault: WINDOWSPASSWORD
 
